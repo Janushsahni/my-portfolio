@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://janushsahni.vercel.app/sitemap.xml
