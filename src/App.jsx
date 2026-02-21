@@ -5,7 +5,7 @@ import {
   Volume2, Power, X, Minus, Square, Search,
   ChevronUp, Code, Briefcase, ExternalLink, Download, Compass,
   CheckCircle2, Signal, FastForward, Play, Calendar, Star, Sparkles, Smile,
-  Bluetooth, Plane, Moon, Sun, RefreshCw, TerminalSquare
+  Bluetooth, Plane, Moon, Sun, RefreshCw, TerminalSquare, ShieldAlert
 } from 'lucide-react';
 
 // --- AUDIO SYNTHESIZER FOR STARTUP SOUND (DESKTOP ONLY) ---
@@ -44,31 +44,31 @@ const playStartupSound = () => {
   }
 };
 
-// --- DATA ---
+// --- REAL USER DATA FROM RESUME ---
 const PORTFOLIO_DATA = {
   expertise: [
-    { title: "Frontend Development", skills: ["React", "Vue", "Tailwind CSS", "TypeScript"] },
-    { title: "Backend Development", skills: ["Node.js", "Python", "PostgreSQL", "REST APIs"] },
-    { title: "Tools & DevOps", skills: ["Git", "Docker", "AWS", "CI/CD"] }
+    { title: "Core Security", skills: ["Penetration Testing", "Vulnerability Assessment", "Network Scanning", "Privilege Escalation"] },
+    { title: "Security Tools", skills: ["Nmap", "Burp Suite", "Wireshark", "Metasploit", "SQLmap", "Hydra", "Gobuster"] },
+    { title: "Development & OS", skills: ["Python", "C/C++", "React", "Kali Linux", "Docker", "Git"] }
   ],
   experience: [
-    { id: 1, role: "Senior Full Stack Engineer", company: "TechNova Solutions", period: "2023 - Present", desc: "Led a team of 4 to architect and scale a cloud-native SaaS platform. Improved performance by 40%." },
-    { id: 2, role: "Software Developer", company: "WebSphere Inc", period: "2021 - 2023", desc: "Developed dynamic React interfaces and robust Node.js backends for e-commerce clients." },
+    { id: 1, role: "Cybersecurity Intern", company: "Global Technology & Information Security (GTIS)", period: "12/2024 - 01/2025", desc: "Worked on penetration testing, threat analysis, and incident response. Identified vulnerabilities and enhanced defenses." },
+    { id: 2, role: "Founding Member", company: "Secventra", period: "2024", desc: "Assisted in establishing Secventra, contributing to technical setup, security testing methodology, and platform development." },
   ],
   projects: [
-    { id: 1, name: "E-Commerce Platform", desc: "A full-stack shopping platform with Stripe integration and real-time inventory.", tech: ["React", "Node", "MongoDB"], color: "from-purple-500 to-indigo-500" },
-    { id: 2, name: "Task Manager Pro", desc: "Collaborative kanban board with real-time updates and drag-and-drop.", tech: ["Vue", "Firebase", "Tailwind"], color: "from-blue-400 to-cyan-400" },
-    { id: 3, name: "AI Image Generator", desc: "Web interface for generating images using stable diffusion and FastAPI.", tech: ["Python", "React", "FastAPI"], color: "from-emerald-400 to-teal-500" },
-    { id: 4, name: "Crypto Tracker", desc: "Real-time cryptocurrency dashboard with interactive historical charts.", tech: ["React", "WebSockets", "Chart.js"], color: "from-orange-400 to-rose-400" },
+    { id: 1, name: "IMHIDE", desc: "Python CLI app for steganography, embedding/extracting encrypted messages in images via LSB with minimal distortion.", tech: ["Python", "Cryptography", "Data-Hiding"], color: "from-purple-500 to-indigo-500" },
+    { id: 2, name: "In-Memory Reverse Shell PoC", desc: "Developed a memory-resident reverse shell (no disk writes) to study execution techniques and evaluate EDR detection.", tech: ["C/C++", "Malware Analysis", "Red Teaming"], color: "from-red-500 to-rose-600" },
+    { id: 3, name: "C++ System Monitoring Tool", desc: "Windows system monitoring utility for OS internals, keyboard input, and event programming to detect unauthorized captures.", tech: ["C++", "WinAPI", "Memory Management"], color: "from-blue-400 to-cyan-500" },
   ],
-  blogs: [
-    { id: 1, title: "Mastering React Hooks in 2026", date: "Feb 15, 2026", readTime: "5 min read" },
-    { id: 2, title: "Why Tailwind CSS is a Game Changer", date: "Jan 28, 2026", readTime: "4 min read" },
-    { id: 3, title: "Building Scalable APIs with Node.js", date: "Jan 10, 2026", readTime: "7 min read" },
+  achievements: [
+    { id: 1, title: "Top 7% Global Rank on TryHackMe", date: "2024", readTime: "Completed 50+ advanced labs" },
+    { id: 2, title: "Certified Red Team Operations Management (CRTOM)", date: "Certification", readTime: "redteamleaders" },
+    { id: 3, title: "OSCP (In Progress)", date: "Certification", readTime: "OffSec" },
+    { id: 4, title: "Cyber Job Simulations (Deloitte, MasterCard, Tata)", date: "Experience", readTime: "Forage" },
   ]
 };
 
-// --- ICONS ---
+// --- ICONS & AVATARS ---
 const WindowsLogo = ({ className = "w-24 h-24" }) => (
   <svg viewBox="0 0 87 87" className={className}>
     <rect x="0" y="0" width="41" height="41" fill="#00a4ef" />
@@ -78,7 +78,21 @@ const WindowsLogo = ({ className = "w-24 h-24" }) => (
   </svg>
 );
 
-const UserIcon = ({ size }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+// Fallback user icon if image fails
+const UserIcon = ({ size, className }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+
+// Profile Picture Component (Pulls automatically from GitHub)
+const ProfilePicture = () => (
+  <img 
+    src="https://github.com/janushsahni.png" 
+    alt="Janush Sahni" 
+    className="w-full h-full rounded-full object-cover"
+    onError={(e) => {
+      e.target.onerror = null; 
+      e.target.src = "https://ui-avatars.com/api/?name=Janush+Sahni&background=0D8ABC&color=fff&size=256";
+    }}
+  />
+);
 
 // --- STATIC AESTHETIC WALLPAPER (DESKTOP ONLY) ---
 const DesktopWallpaper = () => (
@@ -193,6 +207,7 @@ const FaceIdScreen = ({ onComplete }) => {
 
   return (
     <div className="absolute inset-0 bg-[#09090b] flex flex-col items-center pt-1 z-[100] overflow-hidden">
+       {/* iOS Status Bar Mock during unlock */}
        <div className="absolute top-0 w-full flex justify-between px-6 pt-3 text-xs font-semibold text-white z-[90] pointer-events-none opacity-60">
          <span>{new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
          <div className="flex items-center gap-1.5">
@@ -202,11 +217,15 @@ const FaceIdScreen = ({ onComplete }) => {
          </div>
        </div>
 
+       {/* Dynamic Island Pill */}
        <div className={`bg-black transition-all duration-500 flex items-center justify-center relative z-[100] shadow-[0_0_20px_rgba(0,0,0,0.8)]
          ${(islandState === 'idle' || islandState === 'collapsing') ? 'w-[120px] h-[35px] rounded-[24px] mt-1' : 'w-[160px] h-[160px] rounded-[42px] mt-5'}
        `}
-       style={{ transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}
+       style={{
+         transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)' // Authentic iOS Spring Physics
+       }}
        >
+         {/* Scanning Animation */}
          <div className={`absolute flex flex-col items-center justify-center transition-all duration-300 ${islandState === 'scanning' ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
             <div className="relative flex items-center justify-center">
               <div className="absolute w-[70px] h-[70px] border-2 border-blue-500/30 rounded-2xl animate-[spin_3s_linear_infinite]"></div>
@@ -215,6 +234,7 @@ const FaceIdScreen = ({ onComplete }) => {
             <span className="text-blue-400 text-[10px] font-bold tracking-widest mt-4 opacity-80">FACE ID</span>
          </div>
 
+         {/* Success Animation */}
          <div className={`absolute flex flex-col items-center justify-center transition-all duration-300 delay-100 ${islandState === 'success' ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
             <div className="relative flex items-center justify-center bg-green-500/20 w-[70px] h-[70px] rounded-full">
               <Smile size={42} className="text-green-400" strokeWidth={2} />
@@ -292,7 +312,20 @@ const BootScreen = ({ onComplete }) => {
 // --- SHARED WINDOW APPS ---
 const AboutApp = () => {
   const handleDownload = () => {
-    const blob = new Blob(["Janush Sahni - Resume\n\nFull Stack Developer\n\nExpertise:\n- Frontend\n- Backend\n- DevOps\n\nContact: https://www.linkedin.com/in/janush-sahni-8b801922b/"], { type: "text/plain" });
+    const resumeText = `JANUSH SAHNI
+Student of Chandigarh University | Cybersecurity Enthusiast
+Email: janushsahni24@gmail.com | Phone: 87088885935
+
+SUMMARY:
+A strong enthusiasm for cybersecurity and a commitment to enhancing digital safety are demonstrated through hands-on experience in penetration testing and threat analysis.
+
+EXPERIENCE:
+- Intern at Global Technology & Information Security (GTIS) (12/2024 - 01/2025)
+- Founding Member at Secventra (2024)
+
+For the full interactive resume, visit: https://janushsahni.vercel.app/`;
+
+    const blob = new Blob([resumeText], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -309,13 +342,13 @@ const AboutApp = () => {
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"></div>
         <div className="flex items-center gap-5">
           <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-tr from-blue-100 to-indigo-50 dark:from-blue-900/40 dark:to-indigo-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 border-4 border-white dark:border-slate-800 shadow-lg flex-shrink-0 relative transition-colors duration-300">
-            <UserIcon size={40} />
+            <ProfilePicture />
             <div className="absolute bottom-0 right-0 w-6 h-6 bg-green-500 border-2 border-white dark:border-slate-800 rounded-full transition-colors duration-300"></div>
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-1">Janush Sahni</h1>
-            <p className="text-blue-600 dark:text-blue-400 font-semibold text-md md:text-lg flex items-center gap-2">
-              Full Stack Developer <CheckCircle2 size={16} className="text-blue-500 dark:text-blue-400"/>
+            <p className="text-blue-600 dark:text-blue-400 font-semibold text-md md:text-sm flex items-center gap-2">
+              Cybersecurity & Full Stack Developer <CheckCircle2 size={16} className="text-blue-500 dark:text-blue-400"/>
             </p>
           </div>
         </div>
@@ -329,9 +362,7 @@ const AboutApp = () => {
           <section>
             <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white"><Star size={20} className="text-yellow-500"/> About Me</h2>
             <p className="text-md leading-relaxed text-gray-600 dark:text-gray-300 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm transition-colors duration-300">
-              Hello! I'm a passionate developer specializing in building exceptional digital experiences. 
-              I combine deep technical knowledge with an eye for design to create applications that are both robust and beautiful. 
-              Currently open to new opportunities and exciting challenges.
+              A strong enthusiasm for cybersecurity and a commitment to enhancing digital safety are demonstrated through hands-on experience in penetration testing and threat analysis. Skills in ethical hacking and risk assessment have been developed, reflecting a proactive approach to tackling security challenges. A dedication to staying ahead in the rapidly evolving landscape positions me well for contributing to impactful security initiatives and supporting a vision of a safer digital world.
             </p>
           </section>
 
@@ -382,7 +413,7 @@ const ProjectsApp = () => (
   <div className="p-6 pt-16 md:pt-6 bg-slate-50 dark:bg-slate-900 h-full overflow-y-auto pb-20 transition-colors duration-300">
     <div className="flex items-center justify-between mb-8">
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-        <Folder size={28} className="text-blue-500 dark:text-blue-400 fill-blue-500/20 dark:fill-blue-400/20"/> Featured Work
+        <Folder size={28} className="text-blue-500 dark:text-blue-400 fill-blue-500/20 dark:fill-blue-400/20"/> Featured Projects
       </h2>
     </div>
     
@@ -390,12 +421,13 @@ const ProjectsApp = () => (
       {PORTFOLIO_DATA.projects.map(proj => (
         <div key={proj.id} className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 group overflow-hidden flex flex-col transform hover:-translate-y-1">
           {/* Project Image Placeholder */}
-          <div className={`h-32 w-full bg-gradient-to-br ${proj.color} relative overflow-hidden`}>
+          <div className={`h-32 w-full bg-gradient-to-br ${proj.color} relative overflow-hidden flex items-center justify-center`}>
             <div className="absolute inset-0 bg-black/10 dark:bg-black/30 group-hover:bg-transparent transition-colors"></div>
             <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-white/20 dark:bg-white/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
             <div className="absolute top-4 left-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur px-2.5 py-1 rounded-md text-xs font-bold text-gray-800 dark:text-white shadow-sm flex items-center gap-1 transition-colors">
-              <Sparkles size={12} className="text-yellow-500"/> Featured
+              <Sparkles size={12} className="text-yellow-500"/> Tech Focus
             </div>
+            <TerminalSquare size={48} className="text-white opacity-40 group-hover:opacity-80 transition-opacity duration-300" />
           </div>
           
           <div className="p-5 flex-1 flex flex-col">
@@ -412,10 +444,7 @@ const ProjectsApp = () => (
 
             <div className="flex gap-3 mt-auto">
               <button className="flex-1 flex items-center justify-center gap-1.5 bg-gray-900 dark:bg-blue-600 hover:bg-black dark:hover:bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors">
-                <Play size={14} /> Live Demo
-              </button>
-              <button className="flex-1 flex items-center justify-center gap-1.5 bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-600 text-gray-800 dark:text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors shadow-sm">
-                <Github size={14} /> Source
+                <Github size={14} /> GitHub Repos
               </button>
             </div>
           </div>
@@ -433,18 +462,21 @@ const BlogsApp = () => (
         <ChevronUp size={16} className="rotate-90"/>
       </div>
       <div className="flex-1 bg-white dark:bg-slate-700 rounded-full px-4 py-1.5 text-sm text-gray-600 dark:text-gray-300 border border-transparent dark:border-slate-600 flex items-center justify-center md:justify-start gap-2 shadow-inner transition-colors duration-300">
-        <Globe size={14} /> my-portfolio.com
+        <Globe size={14} /> certifications.local
       </div>
     </div>
     <div className="p-6 overflow-y-auto flex-1">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Latest Articles</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white flex items-center gap-2"><ShieldAlert size={24} className="text-red-500"/> Certifications & Ranks</h2>
       <div className="space-y-4">
-        {PORTFOLIO_DATA.blogs.map(blog => (
-          <div key={blog.id} className="p-4 rounded-lg border border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 cursor-pointer shadow-sm transition-colors duration-300">
-            <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-1">{blog.title}</h3>
-            <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-              <span>{blog.date}</span><span>•</span><span>{blog.readTime}</span>
+        {PORTFOLIO_DATA.achievements.map(ach => (
+          <div key={ach.id} className="p-4 rounded-lg border border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 cursor-pointer shadow-sm transition-colors duration-300 flex justify-between items-center">
+            <div>
+              <h3 className="font-bold text-lg text-blue-600 dark:text-blue-400 mb-1">{ach.title}</h3>
+              <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                <span>{ach.date}</span><span>•</span><span>{ach.readTime}</span>
+              </div>
             </div>
+            <CheckCircle2 size={20} className="text-green-500 opacity-80" />
           </div>
         ))}
       </div>
@@ -459,11 +491,11 @@ const ContactApp = () => (
     </div>
     <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">Get In Touch</h2>
     <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-sm">
-      I'm currently open for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+      I'm currently open for new opportunities in Cybersecurity and Development. Send me an email and let's secure the future together.
     </p>
     <div className="flex gap-4 flex-wrap justify-center w-full">
-      <button className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl w-full md:w-auto shadow-sm hover:opacity-90 transition-opacity">
-        <Mail size={18} /> Email Me
+      <button onClick={() => window.location.href = "mailto:janushsahni24@gmail.com"} className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl w-full md:w-auto shadow-sm hover:opacity-90 transition-opacity">
+        <Mail size={18} /> janushsahni24@gmail.com
       </button>
       <button onClick={() => window.open('https://www.linkedin.com/in/janush-sahni-8b801922b/', '_blank')} className="flex items-center justify-center gap-2 bg-[#0a66c2] text-white px-6 py-3 rounded-xl w-full md:w-auto shadow-sm hover:opacity-90 transition-opacity">
         <Linkedin size={18} /> LinkedIn
@@ -477,8 +509,8 @@ const ContactApp = () => (
 
 const TerminalApp = () => {
   const [history, setHistory] = useState([
-    "Windows PowerShell",
-    "Copyright (C) Microsoft Corporation. All rights reserved.",
+    "Kali Linux v2026.1",
+    "root@kali:~#",
     "",
     "Try 'help' to see available commands."
   ]);
@@ -489,16 +521,16 @@ const TerminalApp = () => {
   const handleCommand = async (e) => {
     if (e.key === 'Enter') {
       const currentInput = input;
-      const newHistory = [...history, `C:\\Users\\JanushSahni> ${currentInput}`];
+      const newHistory = [...history, `root@kali:~# ${currentInput}`];
       const cmd = currentInput.trim().toLowerCase();
       
       setInput("");
       
       if (cmd === 'help') {
-        newHistory.push("Available commands: help, whoami, clear, date, resume, sudo hack");
+        newHistory.push("Available commands: help, whoami, clear, date, resume, nmap");
         setHistory(newHistory);
       } else if (cmd === 'whoami') {
-        newHistory.push("Janush Sahni - Full Stack Developer");
+        newHistory.push("Janush Sahni - Cybersecurity & Full Stack Developer");
         setHistory(newHistory);
       } else if (cmd === 'clear') {
         setHistory([]);
@@ -508,18 +540,18 @@ const TerminalApp = () => {
       } else if (cmd === 'resume') {
         newHistory.push("Downloading resume...");
         setHistory(newHistory);
-        const blob = new Blob(["Janush Sahni - Resume\n\nFull Stack Developer\n\nExpertise:\n- Frontend\n- Backend\n- DevOps\n\nContact: https://www.linkedin.com/in/janush-sahni-8b801922b/"], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "Janush_Sahni_Resume.txt";
-        link.click();
-      } else if (cmd === 'sudo hack' || cmd === 'matrix') {
+      } else if (cmd === 'nmap' || cmd === 'sudo hack' || cmd === 'matrix') {
         const hackLines = [
-          "[OK] Connecting to global mainframe...",
-          "[OK] Bypassing firewall protocols...",
-          "[OK] Decrypting HR database...",
-          "[SUCCESS] Extracting candidate profile: Janush Sahni",
+          "Starting Nmap 7.94 ( https://nmap.org )",
+          "Nmap scan report for target-host (192.168.1.100)",
+          "Host is up (0.00012s latency).",
+          "PORT     STATE SERVICE",
+          "22/tcp   open  ssh",
+          "80/tcp   open  http",
+          "443/tcp  open  https",
+          "",
+          "[!] VULNERABILITY DETECTED: Talent missing.",
+          "[SUCCESS] Deploying payload: Janush Sahni Resume...",
           "----------------------------------------",
           "STATUS: TOP TIER DEVELOPER DETECTED.",
           "RECOMMENDATION: HIRE IMMEDIATELY.",
@@ -528,7 +560,7 @@ const TerminalApp = () => {
         newHistory.push(...hackLines);
         setHistory(newHistory);
       } else if (cmd !== '') {
-        newHistory.push(`'${cmd}' is not recognized as an internal or external command.`);
+        newHistory.push(`bash: ${cmd}: command not found`);
         setHistory(newHistory);
       }
     }
@@ -543,7 +575,7 @@ const TerminalApp = () => {
     >
       {history.map((line, i) => <div key={i} className={`min-h-[1.25rem] whitespace-pre-wrap break-words mb-1 ${line.includes('SUCCESS') || line.includes('HIRE') ? 'text-[#00ff00] font-bold' : ''}`}>{line}</div>)}
       <div className="flex mt-1 w-full">
-        <span className="mr-2 text-[#00ff00] whitespace-nowrap shrink-0">C:\&gt;</span>
+        <span className="mr-2 text-red-500 whitespace-nowrap shrink-0 font-bold">root@kali:~#</span>
         <input 
           ref={inputRef}
           autoFocus
@@ -563,26 +595,31 @@ const TerminalApp = () => {
 const LinkedinApp = () => (
   <div className="bg-[#f3f2ef] dark:bg-slate-900 h-full overflow-y-auto pb-20 transition-colors duration-300">
     <div className="bg-white dark:bg-slate-800 max-w-2xl mx-auto md:my-4 md:rounded-lg border-x border-b md:border-t border-gray-200 dark:border-slate-700 overflow-hidden shadow-sm min-h-full md:min-h-0 transition-colors duration-300">
-      <div className="h-28 md:h-32 bg-gray-300 relative">
-        <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1000&auto=format&fit=crop" className="w-full h-full object-cover" alt="cover"/>
+      <div className="h-28 md:h-32 bg-gray-900 relative border-b-4 border-blue-500 overflow-hidden">
+        {/* Hacker/Cybersecurity Themed Background Cover */}
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-60"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] to-transparent opacity-80"></div>
       </div>
       <div className="px-4 md:px-6 pb-6 relative pt-14">
-        <div className="absolute -top-12 left-4 md:left-6 w-24 h-24 bg-white dark:bg-slate-800 rounded-full border-4 border-white dark:border-slate-800 overflow-hidden shadow-sm z-10 transition-colors duration-300">
-           <div className="w-full h-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-400">
-              <UserIcon size={40} />
-           </div>
+        <div className="absolute -top-12 left-4 md:left-6 w-24 h-24 bg-white dark:bg-slate-800 rounded-full border-4 border-white dark:border-slate-800 overflow-hidden shadow-md z-10 transition-colors duration-300">
+           {/* Replace Generic UserIcon with actual GitHub profile picture */}
+           <ProfilePicture />
         </div>
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white leading-tight">Janush Sahni</h1>
-          <p className="text-gray-900 dark:text-gray-300 text-sm mb-1 mt-1">Software Engineer | React | Node.js | Cloud Architecture</p>
-          <p className="text-gray-500 dark:text-gray-400 text-xs mb-4">India • 500+ connections</p>
+          <p className="text-gray-900 dark:text-gray-300 text-sm mb-1 mt-1 font-medium">Cybersecurity Enthusiast | TryHackMe Top 7% | Python & C++ Developer | BE CSE Student at Chandigarh University</p>
+          <p className="text-gray-500 dark:text-gray-400 text-xs mb-4">Rohtak, Haryana, India • 500+ connections</p>
           <div className="flex gap-2 mb-6">
-            <button onClick={() => window.open('https://www.linkedin.com/in/janush-sahni-8b801922b/', '_blank')} className="bg-[#0a66c2] text-white px-4 py-1.5 rounded-full font-semibold text-sm hover:opacity-90 transition-opacity">Connect</button>
-            <button onClick={() => window.open('https://www.linkedin.com/in/janush-sahni-8b801922b/', '_blank')} className="border border-[#0a66c2] text-[#0a66c2] dark:text-blue-400 dark:border-blue-400 px-4 py-1.5 rounded-full font-semibold text-sm hover:bg-blue-50 dark:hover:bg-slate-700 transition-colors">Message</button>
+            <button onClick={() => window.open('https://www.linkedin.com/in/janush-sahni-8b801922b/', '_blank')} className="bg-[#0a66c2] text-white px-5 py-1.5 rounded-full font-semibold text-sm hover:bg-[#004182] transition-colors">Connect</button>
+            <button onClick={() => window.open('https://www.linkedin.com/in/janush-sahni-8b801922b/', '_blank')} className="border-2 border-[#0a66c2] text-[#0a66c2] dark:text-blue-400 dark:border-blue-400 px-5 py-1.5 rounded-full font-semibold text-sm hover:bg-blue-50 dark:hover:bg-slate-700 transition-colors">Message</button>
           </div>
           <div className="bg-gray-50 dark:bg-slate-700/50 rounded-lg p-4 border border-gray-100 dark:border-slate-600 transition-colors duration-300">
-            <h2 className="font-bold text-gray-900 dark:text-white mb-2">About</h2>
-            <p className="text-sm text-gray-700 dark:text-gray-300">Passionate full-stack developer with 5+ years of experience in building scalable web applications. Always eager to learn new technologies and collaborate with amazing teams.</p>
+            <h2 className="font-bold text-gray-900 dark:text-white mb-2 text-lg">About</h2>
+            <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-line">
+              A strong enthusiasm for cybersecurity and a commitment to enhancing digital safety are demonstrated through hands-on experience in penetration testing and threat analysis. Skills in ethical hacking and risk assessment have been developed, reflecting a proactive approach to tackling security challenges. 
+              {'\n\n'}
+              Top 7% global rank on TryHackMe.
+            </p>
           </div>
         </div>
       </div>
@@ -593,11 +630,11 @@ const LinkedinApp = () => (
 
 // --- APP DEFINITIONS ---
 const ALL_APPS = [
-  { id: 'about', title: 'About Me', icon: UserIcon, component: AboutApp, bgColor: 'bg-gradient-to-b from-gray-200 to-gray-300 border-gray-300', iconColor: 'text-gray-700', taskbarColor: 'text-gray-700', hasBadge: false },
+  { id: 'about', title: 'Resume', icon: UserIcon, component: AboutApp, bgColor: 'bg-gradient-to-b from-gray-200 to-gray-300 border-gray-300', iconColor: 'text-gray-700', taskbarColor: 'text-gray-700', hasBadge: false },
   { id: 'projects', title: 'Projects', icon: Folder, component: ProjectsApp, bgColor: 'bg-gradient-to-b from-blue-300 to-blue-500 border-blue-400', iconColor: 'text-white fill-white/20', taskbarColor: 'text-blue-500 fill-blue-500', hasBadge: false },
-  { id: 'terminal', title: 'Terminal', icon: Terminal, component: TerminalApp, bgColor: 'bg-gradient-to-b from-gray-800 to-black border-gray-700', iconColor: 'text-white', taskbarColor: 'text-gray-700', hasBadge: false },
+  { id: 'terminal', title: 'Kali Term', icon: Terminal, component: TerminalApp, bgColor: 'bg-gradient-to-b from-gray-800 to-black border-gray-700', iconColor: 'text-red-500', taskbarColor: 'text-gray-800', hasBadge: false },
   { id: 'linkedin', title: 'LinkedIn', icon: Linkedin, component: LinkedinApp, bgColor: 'bg-gradient-to-b from-[#0077b5] to-[#005582] border-[#0077b5]', iconColor: 'text-white', taskbarColor: 'text-[#0a66c2]', hasBadge: true },
-  { id: 'blogs', title: 'Safari', icon: Compass, component: BlogsApp, bgColor: 'bg-gradient-to-b from-white to-gray-100 border-gray-200', iconColor: 'text-blue-500', taskbarColor: 'text-blue-500', hasBadge: false },
+  { id: 'blogs', title: 'Certs', icon: ShieldAlert, component: BlogsApp, bgColor: 'bg-gradient-to-b from-red-500 to-rose-600 border-red-500', iconColor: 'text-white', taskbarColor: 'text-red-500', hasBadge: false },
   { id: 'contact', title: 'Mail', icon: Mail, component: ContactApp, bgColor: 'bg-gradient-to-b from-blue-400 to-blue-600 border-blue-500', iconColor: 'text-white', taskbarColor: 'text-blue-500', hasBadge: true },
 ];
 
@@ -734,12 +771,12 @@ const MobileIOS = ({ isDarkMode, setIsDarkMode }) => {
               onClick={() => setActiveApp('about')}
             >
                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-white border-[3px] border-white/40 shadow-inner">
-                    <UserIcon size={28} />
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-white border-[3px] border-white/40 shadow-inner overflow-hidden">
+                    <ProfilePicture />
                   </div>
                   <div>
                      <p className="text-white font-bold text-lg leading-tight drop-shadow-md">Janush Sahni</p>
-                     <p className="text-white/90 text-xs font-medium">Full Stack Developer 🚀</p>
+                     <p className="text-white/90 text-xs font-medium">Cybersec & Full Stack</p>
                   </div>
                </div>
                <div className="bg-white text-blue-600 px-4 py-2 rounded-full text-xs font-extrabold shadow-lg animate-pulse">Hire Me</div>
@@ -747,16 +784,16 @@ const MobileIOS = ({ isDarkMode, setIsDarkMode }) => {
 
             {/* Featured Project Small Widget */}
             <div 
-              className="bg-gradient-to-br from-purple-500/80 to-indigo-600/80 backdrop-blur-xl rounded-[1.5rem] p-5 w-full border border-white/20 shadow-[0_10px_40px_rgba(0,0,0,0.15)] active:scale-95 transition-transform cursor-pointer relative overflow-hidden"
+              className="bg-gradient-to-br from-red-500/80 to-rose-600/80 backdrop-blur-xl rounded-[1.5rem] p-5 w-full border border-white/20 shadow-[0_10px_40px_rgba(0,0,0,0.15)] active:scale-95 transition-transform cursor-pointer relative overflow-hidden"
               onClick={() => setActiveApp('projects')}
             >
               <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
               <div className="flex justify-between items-start mb-2 relative z-10">
-                 <div className="bg-white/20 px-2 py-1 rounded text-[10px] text-white font-bold tracking-wider flex items-center gap-1"><Sparkles size={10}/> FEATURED</div>
+                 <div className="bg-white/20 px-2 py-1 rounded text-[10px] text-white font-bold tracking-wider flex items-center gap-1"><Sparkles size={10}/> MALWARE POC</div>
                  <Folder size={20} className="text-white/80"/>
               </div>
-              <h3 className="text-white font-bold text-base relative z-10">E-Commerce Platform</h3>
-              <p className="text-white/70 text-xs mt-1 relative z-10">React • Node • MongoDB</p>
+              <h3 className="text-white font-bold text-base relative z-10">Memory Reverse Shell</h3>
+              <p className="text-white/70 text-xs mt-1 relative z-10">C/C++ • EDR Evasion</p>
             </div>
           </div>
 
@@ -897,14 +934,12 @@ const Desktop = ({ isDarkMode, setIsDarkMode }) => {
     const win = windows.find(w => w.id === id);
     if (win.maximized) return; 
 
-    // Convert CSS calc bounds to absolute pixels upon dragging so dragging is seamless
     const el = document.getElementById(`window-${id}`);
     if (!el) return;
     const rect = el.getBoundingClientRect();
     
     e.target.setPointerCapture(e.pointerId);
     
-    // We lock it out of the Auto-Tiling grid when they touch it
     setDraggingWin({
       id,
       startX: e.clientX,
@@ -913,7 +948,6 @@ const Desktop = ({ isDarkMode, setIsDarkMode }) => {
       initY: win.customY !== undefined ? win.customY : rect.top
     });
     
-    // Safety commit to state instantly
     if (win.customX === undefined) {
       setWindows(windows.map(w => w.id === id ? {...w, customX: rect.left, customY: rect.top} : w));
     }
@@ -927,7 +961,6 @@ const Desktop = ({ isDarkMode, setIsDarkMode }) => {
     const dy = e.clientY - draggingWin.startY;
     
     let newY = draggingWin.initY + dy;
-    // Prevent dragging above the screen and losing the top bar controls
     if (newY < 0) newY = 0;
     
     setWindows(windows.map(w => 
@@ -1169,7 +1202,7 @@ const Desktop = ({ isDarkMode, setIsDarkMode }) => {
 
               <div className="mt-auto bg-white/40 dark:bg-slate-700/40 -mx-6 -mb-6 p-4 border-t border-white/40 dark:border-slate-600/40 rounded-b-xl flex justify-between items-center">
                 <div className="flex items-center gap-3 cursor-pointer hover:bg-white/40 dark:hover:bg-slate-600 p-2 rounded-lg transition-colors">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 border border-blue-200"><UserIcon size={16} /></div>
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 border border-blue-200 overflow-hidden"><ProfilePicture /></div>
                     <span className="text-sm font-medium text-gray-800 dark:text-white">Janush Sahni</span>
                 </div>
                 <button onClick={() => window.location.reload()} className="p-2 hover:bg-white/60 dark:hover:bg-slate-600 rounded-lg transition-colors text-gray-700 dark:text-gray-300" title="Restart"><Power size={18} /></button>
@@ -1273,3 +1306,4 @@ export default function App() {
     </div>
   );
 }
+```eof
