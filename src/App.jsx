@@ -478,7 +478,7 @@ const ContactApp = () => (
     </p>
     <div className="flex gap-4 flex-wrap justify-center w-full">
       <button onClick={() => window.location.href = "mailto:janushsahni24@gmail.com"} className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl w-full md:w-auto shadow-sm hover:opacity-90 transition-opacity">
-        <Mail size={18} /> janushsahni24@gmail.com
+        <Mail size={18} /> GMail
       </button>
       <button onClick={() => window.open('https://www.linkedin.com/in/janush-sahni-8b801922b/', '_blank')} className="flex items-center justify-center gap-2 bg-[#0a66c2] text-white px-6 py-3 rounded-xl w-full md:w-auto shadow-sm hover:opacity-90 transition-opacity">
         <Linkedin size={18} /> LinkedIn
