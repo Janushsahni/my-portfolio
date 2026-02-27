@@ -478,7 +478,7 @@ const ContactApp = () => (
     </p>
     <div className="flex gap-4 flex-wrap justify-center w-full">
       <button onClick={() => window.location.href = "mailto:janushsahni24@gmail.com"} className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl w-full md:w-auto shadow-sm hover:opacity-90 transition-opacity">
-        <Mail size={18} /> Gmail
+        <Mail size={18} /> janushsahni24@gmail.com
       </button>
       <button onClick={() => window.open('https://www.linkedin.com/in/janush-sahni-8b801922b/', '_blank')} className="flex items-center justify-center gap-2 bg-[#0a66c2] text-white px-6 py-3 rounded-xl w-full md:w-auto shadow-sm hover:opacity-90 transition-opacity">
         <Linkedin size={18} /> LinkedIn
@@ -825,15 +825,14 @@ const MobileIOS = ({ isDarkMode, setIsDarkMode }) => {
           
           {/* iOS Sub-page Header */}
           {activeApp && (
-            <div className="pt-12 pb-2 px-4 flex items-center justify-between border-b border-gray-100 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md z-20 shrink-0">
-               <button onClick={() => setActiveApp(null)} className="flex items-center text-blue-500 active:opacity-50 transition-opacity">
+            <div className="pt-12 pb-3 px-4 flex items-center justify-between border-b border-gray-100 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl z-20 shrink-0 relative">
+               <button onClick={() => setActiveApp(null)} className="flex items-center text-blue-500 active:opacity-50 transition-opacity relative z-10">
                   <ChevronUp size={24} className="-rotate-90 -ml-2" />
-                  <span className="font-medium text-[15px]">Home</span>
+                  <span className="font-medium text-[17px] -ml-1">Home</span>
                </button>
-               <span className="font-semibold text-gray-900 dark:text-white text-[15px]">
+               <span className="absolute left-1/2 transform -translate-x-1/2 font-semibold text-gray-900 dark:text-white text-[17px]">
                  {ALL_APPS.find(a => a.id === activeApp)?.title}
                </span>
-               <div className="w-[60px]"></div> {/* Spacer for alignment */}
             </div>
           )}
 
@@ -1265,7 +1264,7 @@ const Desktop = ({ isDarkMode, setIsDarkMode }) => {
 // =========================================================================
 export default function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [bootState, setBootState] = useState(() => window.innerWidth < 768 ? 'power-off' : 'bios');
+  const [bootState, setBootState] = useState(() => window.innerWidth < 768 ? 'face-id' : 'bios');
   
   // GLOBAL DARK MODE STATE
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -1278,21 +1277,6 @@ export default function App() {
 
   return (
     <div className={`fixed inset-0 overflow-hidden bg-black select-none ${isDarkMode ? 'dark' : ''}`}>
-      {/* 0. Mobile specific power button (Desktop skips this completely) */}
-      {bootState === 'power-off' && isMobile && (
-        <div className="h-full w-full flex flex-col items-center justify-center bg-zinc-900 text-white gap-6">
-          <div className="text-center max-w-md p-6">
-             <h1 className="text-3xl font-bold mb-4 font-sans tracking-tight">System Offline</h1>
-             <p className="text-gray-400 mb-8">Click the power button to initialize the boot sequence and load the portfolio OS.</p>
-             <button 
-                onClick={() => setBootState('face-id')} 
-                className="group relative inline-flex items-center justify-center w-24 h-24 bg-zinc-800 rounded-full hover:bg-zinc-700 transition-all duration-300 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(59,130,246,0.5)] border border-zinc-700 focus:outline-none focus:ring-4 focus:ring-blue-500/50"
-             >
-               <Power size={40} className="text-gray-400 group-hover:text-blue-400 transition-colors" />
-             </button>
-          </div>
-        </div>
-      )}
       
       {/* 1. Mobile specific direct Face-ID sequence */}
       {bootState === 'face-id' && isMobile && <FaceIdScreen onComplete={() => setBootState('netflix')} />}
